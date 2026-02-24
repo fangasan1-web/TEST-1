@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skybox Module 2 | Mapping Events</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Base Layout */
+        body { overflow-x: hidden; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
+        .module-detail-container { text-align: center; padding: 20px; }
+        
+        .simulation-container {
+            position: relative;
+            margin: 20px auto;
+            width: 100%;        
+            max-width: 100%; 
+            display: inline-block;
+        }
+
+        .skybox-bg { 
+            display: block; 
+            width: 100%; 
+            height: auto; 
+            border-radius: 8px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+        }
+
+        /* --- INTERACTIVE ZONES --- */
+        .hitbox-red { position: absolute; border: 2px solid red; background: rgba(255, 0, 0, 0.2); cursor: pointer; z-index: 10; display: none; }
+        .hitbox-blue { position: absolute; border: 2px solid #007bff; background: rgba(0, 123, 255, 0.3); cursor: pointer; z-index: 10; display: none; }
+
+        /* Form Overlays */
+        .listing-input, .listing-select { 
+            position: absolute; 
+            border: 1px solid #ccc; 
+            font-size: 0.8vw; 
+            padding: 2px; 
+            display: none; 
+            z-index: 20; 
+            background: white; 
+        }
+        
+        .toggle-btn { position: absolute; cursor: pointer; z-index: 20; display: none; opacity: 0.3; background: transparent; border: none; }
+
+        /* --- COORDINATES: NAVIGATION --- */
+        #events-hitbox { display: block; top: 0.5%; left: 16.5%; width: 5%; height: 3.5%; }
+        #inventory-hitbox { top: 4%; left: 35.5%; width: 6.5%; height: 3.5%; }
+        #search-hitbox { top: 19%; left: 12%; width: 3.5%; height: 3%; }
+        #select-event-hitbox { top: 34.2%; left: 16.5%; width: 1.2%; height: 2%; }
+        #next-step-hitbox { top: 5.5%; left: 95.8%; width: 3.2%; height: 3%; }
+        #search-input { position: absolute; top: 17.5%; left: 0.8%; width: 10.5%; height: 3.2%; border: 2px solid red; font-size: 14px; padding-left: 5px; display: none; z-index: 15; background: white; }
+
+        /* --- COORDINATES: LISTING FIELDS --- */
+        #input-qty { top: 27.2%; left: 25.8%; width: 10.5%; height: 2.2%; }
+        #input-section { top: 27.2%; left: 36.8%; width: 10.5%; height: 2.2%; }
+        #input-row { top: 27.2%; left: 47.8%; width: 10.5%; height: 2.2%; }
+        #input-groupcost { top: 27.2%; left: 59.5%; width: 8.5%; height: 2.2%; }
+        
+        #input-unitlist { top: 33.5%; left: 58.5%; width: 9.5%; height: 2.2%; }
+        #input-taxedcost { top: 33.5%; left: 80.5%; width: 9.5%; height: 2.2%; }
+        #input-lowseat { top: 33.5%; left: 47.8%; width: 10.5%; height: 2.2%; }
+        
+        #input-internal-notes { top: 69.5%; left: 42.2%; width: 16.5%; height: 10%; }
+        #input-public-notes { top: 69.5%; left: 25.8%; width: 16%; height: 10%; }
+
+        /* Dropdowns */
+        #select-inhand { top: 27.2%; left: 69.2%; width: 10.5%; height: 2.5%; }
+        #select-split { top: 27.2%; left: 80.2%; width: 10.5%; height: 2.5%; }
+        #select-seattype { top: 33.5%; left: 36.8%; width: 10.5%; height: 2.5%; } /* New Seat Type Position */
+
+        /* Guide UI */
+        .guide-text { background: #e1f5fe; padding: 20px; font-size: 1.1rem; border-radius: 8px; margin-bottom: 20px; border: 1px solid #b3e5fc; display: inline-block; color: #01579b; }
+        .btn-group { margin-top: 30px; padding-bottom: 50px; }
+        .nav-btn { display: inline-block; padding: 12px 25px; border-radius: 5px; font-weight: bold; text-decoration: none; transition: 0.3s; }
+        .btn-next { background-color: #28a745; color: white; display: none; }
+    </style>
+</head>
+<body>
+
+    <main class="module-detail-container">
+        <header class="module-header">
+            <h1>Module 2: Adding Events in Sky Box</h1>
+        </header>
+
+        <section class="guide-text" id="instruction">
+            <strong>Task 1:</strong> Click the red box over <strong>"Inventory"</strong> to see events.
+        </section>
+
+        <div class="simulation-container">
+            <img src="skybox-dashboard.jpg" id="sim-image" alt="Skybox Simulation" class="skybox-bg">
+            
+            <div id="events-hitbox" class="hitbox-red" onclick="handleEventClick()"></div>
+            <div id="inventory-hitbox" class="hitbox-red" onclick="handleInventoryClick()"></div>
+            <div id="search-hitbox" class="hitbox-red" onclick="handleSearchClick()"></div>
+            <div id="select-event-hitbox" class="hitbox-blue" onclick="handleSelectEvent()"></div>
+            <div id="next-step-hitbox" class="hitbox-red" onclick="handleNextStep()"></div>
+
+            <input type="text" id="search-input" placeholder="Search...">
+
+            <input type="text" id="input-qty" class="listing-input" placeholder="Qty">
+            <input type="text" id="input-section" class="listing-input" placeholder="Section">
+            <input type="text" id="input-row" class="listing-input" placeholder="Row">
+            <input type="text" id="input-groupcost" class="listing-input" placeholder="$ 0.00">
+            <input type="text" id="input-unitlist" class="listing-input" placeholder="$ Price">
+            <input type="text" id="input-taxedcost" class="listing-input" placeholder="$ Taxed">
+            <input type="text" id="input-lowseat" class="listing-input" placeholder="Seat">
+            
+            <textarea id="input-internal-notes" class="listing-input" placeholder="Internal notes..."></textarea>
+            <textarea id="input-public-notes" class="listing-input" placeholder="Public notes..."></textarea>
+
+            <select id="select-seattype" class="listing-select">
+                <option value="consecutive">Consecutive</option>
+                <option value="oddeven">Odd/Even</option>
+                <option value="piggyback">Piggyback</option>
+                <option value="ga">GA</option>
+            </select>
+
+            <select id="select-inhand" class="listing-select">
+                <option>Now</option>
+                <option>Days prior to event</option>
+                <option>Choose a day</option>
+            </select>
+
+            <select id="select-split" class="listing-select">
+                <option>Default</option>
+                <option>Any</option>
+                <option>Custom</option>
+                <option>Never Leave One</option>
+                <option>No Splits</option>
+            </select>
+
+            <button id="toggle-hide-yes" class="toggle-btn" style="top:34.5%; left:26.5%; width:1.5%; height:1.5%;"></button>
+            <button id="toggle-hide-no" class="toggle-btn" style="top:34.5%; left:28.2%; width:1.5%; height:1.5%;"></button>
+        </div>
+
+        <footer class="btn-group">
+            <a href="skybox.html" class="nav-btn" style="background-color: #f1f1f1; color: #333; border: 1px solid #ccc;">⌂ Back</a>
+            <a href="skybox-m3.html" id="next-mod" class="nav-btn btn-next">Proceed to Module 3 →</a>
+        </footer>
+    </main>
+
+    <script>
+        function handleEventClick() {
+            document.getElementById('instruction').innerHTML = "<strong>Task 2:</strong> Click <strong>'Add Inventory'</strong>.";
+            document.getElementById('events-hitbox').style.display = "none";
+            document.getElementById('inventory-hitbox').style.display = "block";
+        }
+
+        function handleInventoryClick() {
+            document.getElementById('sim-image').src = "skybox-addinventory.png";
+            document.getElementById('instruction').innerHTML = "<strong>Task 3:</strong> Type <strong>Journey</strong> and click <strong>SEARCH</strong>.";
+            document.getElementById('inventory-hitbox').style.display = "none";
+            document.getElementById('search-input').style.display = "block";
+            document.getElementById('search-hitbox').style.display = "block";
+        }
+
+        function handleSearchClick() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            if (query === "journey") {
+                document.getElementById('sim-image').src = "skybox-eventsearch.png";
+                document.getElementById('search-input').style.display = "none";
+                document.getElementById('search-hitbox').style.display = "none";
+                document.getElementById('instruction').innerHTML = "<strong>Task 4:</strong> Click the blue box to <strong>Select the Event</strong>.";
+                document.getElementById('select-event-hitbox').style.display = "block";
+            } else {
+                alert("Please enter 'Journey' to continue simulation.");
+            }
+        }
+
+        function handleSelectEvent() {
+            document.getElementById('instruction').innerHTML = "<strong>Task 5:</strong> Click <strong>'NEXT'</strong> at the top right corner.";
+            document.getElementById('select-event-hitbox').style.display = "none";
+            document.getElementById('next-step-hitbox').style.display = "block";
+        }
+
+        function handleNextStep() {
+            document.getElementById('sim-image').src = "skybox-addinglisting.png";
+            document.getElementById('next-step-hitbox').style.display = "none";
+            
+            const guide = document.getElementById('instruction');
+            guide.style.background = "#c8e6c9";
+            guide.innerHTML = "<strong>Module 2 Ready:</strong> Fill in the listing details below.";
+            
+            const formElements = document.querySelectorAll('.listing-input, .listing-select, .toggle-btn');
+            formElements.forEach(el => el.style.display = "block");
+
+            document.getElementById('next-mod').style.display = "inline-block";
+        }
+    </script>
+</body>
+</html>

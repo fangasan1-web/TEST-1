@@ -1,0 +1,333 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    scroll-behavior: smooth;
+}
+
+/* Navigation */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 10%;
+    background: #fff;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 400;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #007bff;
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                url('https://imgcdn.stablediffusionweb.com/2024/10/1/c46c607d-71b3-433c-8d0e-8807969d4dbc.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #0056b3;
+}
+
+/* Sections General */
+section {
+    padding: 100px 10%;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+}
+
+/* Project Grid */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.project-card {
+    background: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+}
+
+.placeholder-img {
+    height: 200px;
+    background: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+/* Contact Form */
+#contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#contact-form input, #contact-form textarea {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #333;
+    color: #fff;
+}
+/* Fix for the grid images */
+.project-img {
+    width: 100%;
+    max-width: 200px; /* Limits the size */
+    height: 150px;
+    object-fit: contain; /* Keeps aspect ratio without stretching */
+    display: block;
+    margin: 0 auto 15px; /* Centers the image */
+}
+
+.project-card {
+    text-decoration: none; /* Removes underline from links */
+    color: inherit;
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Specific Project Page Styles */
+.project-detail-container {
+    max-width: 900px;
+    margin: 120px auto 50px;
+    padding: 20px;
+    text-align: center;
+}
+
+.video-placeholder {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #333;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin: 30px 0;
+}
+
+.module-list {
+    text-align: left;
+    background: #f4f4f4;
+    padding: 20px;
+    border-radius: 8px;
+}
+.module-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.module-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.module-item:hover {
+    background-color: #007bff; /* Or your preferred brand color */
+    color: white;
+    transform: translateX(5px);
+    border-color: #007bff;
+}
+
+.arrow {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+/* Container for the specific module page */
+.module-detail-container {
+    max-width: 1000px;
+    margin: 100px auto 50px;
+    padding: 0 20px;
+}
+
+.module-header {
+    margin-bottom: 30px;
+}
+
+.module-header span {
+    color: #007bff;
+    font-weight: bold;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+/* Video Player Styling */
+.video-wrapper {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Navigation Buttons at the bottom */
+.module-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.next-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.next-btn:hover {
+    background-color: #218838;
+}
+
+.disabled-btn {
+    color: #ccc;
+    padding: 12px 0;
+    cursor: not-allowed;
+}
+/* Styling for locked modules */
+.module-item.locked {
+    pointer-events: none; /* Prevents clicking */
+    opacity: 0.5;         /* Makes it look greyed out */
+    cursor: not-allowed;
+    background-color: #f0f0f0;
+}
+
+.module-item.locked:hover {
+    transform: none;      /* Disables hover effect */
+}
+/* Disabled/Locked state for modules */
+.module-item.locked {
+    pointer-events: none; /* This makes it unclickable */
+    opacity: 0.5;         /* Makes it look greyed out */
+    cursor: not-allowed;
+    background-color: #f5f5f5;
+    border-color: #ccc;
+}
+
+.module-item.locked:hover {
+    transform: none;      /* Removes hover animation while locked */
+    box-shadow: none;
+}
+/* --- BOOTSTRAP OVERRIDES --- */
+
+/* This ensures your Hero button stays blue even with Bootstrap loaded */
+.hero-content .btn-custom {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #007bff !important; /* Force the blue color */
+    color: #fff !important;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: 0.3s;
+    font-weight: bold;
+    border: none;
+}
+
+.hero-content .btn-custom:hover {
+    background-color: #0056b3 !important;
+    color: #fff !important;
+}
+
+/* Optional: If you want to use the same blue for all project buttons */
+.btn-custom {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+}
